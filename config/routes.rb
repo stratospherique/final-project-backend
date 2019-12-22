@@ -5,4 +5,9 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   get '/logged_in', to: 'sessions#is_logged_in?'
+
+  get '/articles', to: 'articles#index'
+  get '/articles/trending', to: 'articles#find_trending'
+  post '/articles/add', to: 'articles#create'
+  delete '/articles/:id', to: 'articles#destroy'
 end
