@@ -44,6 +44,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def get_favorites_ids
+    @user = User.find(params[:id])
+    render json: @user.articles.ids
+  end
+
+  def get_favorites
+    @user = User.find(params[:id])
+    render json: @user.articles
+  end
+
   private
 
   def find_instance

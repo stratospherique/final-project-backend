@@ -3,7 +3,7 @@ class ArticlesController < ApplicationController
   before_action :find_article, only: [:destroy, :show]
 
   def index
-    @articles = Article.not_trending
+    @articles = Article.all
     if @articles
       render json: {
         articles: @articles
@@ -21,7 +21,7 @@ class ArticlesController < ApplicationController
     @articles = Article.trending
     if @articles
       render json: {
-        trending: @articles
+        trending: @articles.ids
       }
     else
       render json: {
@@ -66,4 +66,5 @@ class ArticlesController < ApplicationController
   def article_params
     params.require(:article).permit(:description, :price, :buildingType, :propertyType, :city, :footage, :rating, :preview => [])
   end
+
 end

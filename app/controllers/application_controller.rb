@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
   def authorized_user?
      @user == current_user
   end
+
   def logout!
      session.clear
   end

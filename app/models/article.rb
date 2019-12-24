@@ -1,4 +1,8 @@
 class Article < ApplicationRecord
+
+  has_many :favorites
+  has_many :users, :through => :favorites
+
   validates :description, presence: true, length: {maximum: 50, minimum: 10}
   validates :price, numericality: true
   validates :preview, presence: true
