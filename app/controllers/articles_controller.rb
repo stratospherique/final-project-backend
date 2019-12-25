@@ -21,7 +21,7 @@ class ArticlesController < ApplicationController
     @articles = Article.trending
     if @articles
       render json: {
-        trending: @articles.ids
+        trending: @articles
       }
     else
       render json: {

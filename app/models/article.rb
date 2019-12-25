@@ -13,6 +13,6 @@ class Article < ApplicationRecord
   validates :rating, inclusion: {in: 0..5}
 
   scope :ordered, -> {Article.order(rating: :desc, created_at: :desc)}
-  scope :trending, -> {ordered.limit(5)}
+  scope :trending, -> {ordered.limit(5).ids}
   scope :not_trending, -> {ordered.offset(6)}
 end
