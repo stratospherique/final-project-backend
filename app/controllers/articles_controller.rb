@@ -26,7 +26,7 @@ class ArticlesController < ApplicationController
     else
       render json: {
         status: 500,
-        message: ['No Estates Found']
+        message: ['No Trending Found']
       }
     end
   end
