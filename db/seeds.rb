@@ -7,11 +7,11 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'faker'
 
-(0..20).each do
+(1..20).each do |i|
   a = Article.new(
     description: Faker::Lorem.sentence(word_count: 3),
     price: Faker::Commerce.price(range: 400..2000.0),
-    preview: [Faker::LoremPixel.image],
+    preview: [Faker::LoremPixel.image(category: 'city', number: i > 10 ? i - 10 : i)],
     buildingType: Faker::House.room,
     propertyType: Faker::House.room,
     city: Faker::Address.city,

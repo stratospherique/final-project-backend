@@ -31,10 +31,6 @@ class ArticlesController < ApplicationController
     end
   end
 
-  def show
-    
-  end
-
   def create
     @article = Article.new(article_params)
     if @article.save
