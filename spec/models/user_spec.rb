@@ -1,7 +1,6 @@
 require 'rails_helper'
-require 'faker'
 
-RSpec.describe Article, type: :model do
+RSpec.describe User, type: :model do
   context 'adding a user' do
     it 'create a user instance' do
       exp = build :empty_user
