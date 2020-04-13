@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   get '/articles', to: 'articles#index'
   get '/articles/trending', to: 'articles#find_trending'
-  post '/articles/add', to: 'articles#create'
+  post '/articles', to: 'articles#create'
   delete '/articles/:id', to: 'articles#destroy'
 
   get '/user/:id/favorites', to: 'users#get_favorites_ids'

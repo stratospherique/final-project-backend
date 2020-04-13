@@ -21,18 +21,14 @@ class ArticlesController < ApplicationController
     @articles = Article.trending
     if @articles
       render json: {
-        trending: @articles.ids
+        trending: @articles
       }
     else
       render json: {
         status: 500,
-        message: ['No Estates Found']
+        message: ['No Trending Found']
       }
     end
-  end
-
-  def show
-    
   end
 
   def create
