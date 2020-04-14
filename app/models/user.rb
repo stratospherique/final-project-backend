@@ -1,8 +1,11 @@
 class User < ApplicationRecord
   has_secure_password
+  # for user avatar
+  has_one_attached :avatar
 
   has_many :favorites
   has_many :articles, :through => :favorites
+
 
   validates :username, presence: true
   validates :username, uniqueness: true

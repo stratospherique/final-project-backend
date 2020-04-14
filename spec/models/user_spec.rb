@@ -36,5 +36,6 @@ RSpec.describe User, type: :model do
       user = build :admin_user
       expect(user.admin).to be_truthy
     end
+
   end
 end
