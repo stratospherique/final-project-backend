@@ -56,12 +56,40 @@ class UsersController < ApplicationController
 
   def get_favorites_ids
     @user = User.find(params[:id])
-    render json: @user.articles.ids
+    if @user
+      if @user = current_user
+        render json: @user.articles.ids
+      else
+        render json: {
+        status: :internal_server_error,
+        error: 'Unauthorized action'
+      }  
+      end
+    else
+      render json: {
+        status: :internal_server_error,
+        error: 'Unregistered User'
+      }
+    end
   end
 
   def get_favorites
     @user = User.find(params[:id])
-    render json: @user.articles
+    if @user
+      if @user = current_user
+        render json: @user.articles
+      else
+        render json: {
+        status: :internal_server_error,
+        error: 'Unauthorized action'
+      }  
+      end
+    else
+      render json: {
+        status: :internal_server_error,
+        error: 'Unregistered User'
+      }
+    end
   end
 
   private
