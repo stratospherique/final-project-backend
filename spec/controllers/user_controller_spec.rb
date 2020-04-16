@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-# Request specs/controller specs
+# controller specs
 
 RSpec.describe UsersController, type: :controller do
   describe 'GET #index' do
@@ -46,21 +46,4 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  describe 'GET #get_favorites_ids' do
-    it 'returns an error if user is not logged in' do
-      
-    end
-
-    it 'returns an error if user is unregistered' do
-      
-    end
-
-    it 'returns an empty list of liked articles for a user' do
-      
-    end
-
-    it 'returns the list of liked articles for a user' do
-      
-    end
-  end
 end

@@ -63,13 +63,13 @@ class UsersController < ApplicationController
         render json: {
         status: :internal_server_error,
         error: 'Unauthorized action'
-      }  
+      }, status: :internal_server_error  
       end
     else
       render json: {
         status: :internal_server_error,
         error: 'Unregistered User'
-      }
+      }, status: :internal_server_error
     end
   end
 
@@ -82,13 +82,13 @@ class UsersController < ApplicationController
         render json: {
         status: :internal_server_error,
         error: 'Unauthorized action'
-      }  
+      }, status: :internal_server_error  
       end
     else
       render json: {
         status: :internal_server_error,
         error: 'Unregistered User'
-      }
+      }, status: :internal_server_error
     end
   end
 
