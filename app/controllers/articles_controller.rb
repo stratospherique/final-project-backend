@@ -4,14 +4,14 @@ class ArticlesController < ApplicationController
 
   def index
     @articles = Article.all
-    if @articles
+    if !@articles.empty?
       render json: {
         articles: @articles
       }
     else
       render json: {
-        status: 500,
-        message: ['No data found']
+        message: ['No data found'],
+        status: :internal_server_error
       }
     end
   end
@@ -19,14 +19,14 @@ class ArticlesController < ApplicationController
 
   def find_trending
     @articles = Article.trending
-    if @articles
+    if !@articles.empty?
       render json: {
         trending: @articles
       }
     else
       render json: {
-        status: 500,
-        message: ['No Trending Found']
+        message: ['No Trending Found'],
+        status: :internal_server_error
       }
     end
   end
@@ -39,18 +39,25 @@ class ArticlesController < ApplicationController
       }
     else
       render json: {
-        status: 500,
-        message: @article.errors.full_messages
+        message: @article.errors.full_messages,
+        status: :internal_server_error
       }
     end
   end
 
   def destroy
-    @article.destroy
-    render json: {
-      status: 200,
-      message: ["deleted successfully"]
-    }
+    begin
+      @article.destroy
+      render json: {
+        status: 200,
+        message: ["deleted successfully"]
+      }
+    rescue => exception
+      render json: {
+        message: ["Internal Server Error"],
+        status: :internal_server_error
+      }
+    end
   end
 
   private

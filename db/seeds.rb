@@ -6,6 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'faker'
+require 'open-uri'
 
 (1..20).each do |i|
   a = Article.new(
@@ -21,10 +22,12 @@ require 'faker'
   a.save
 end
 
-User.create(
+admin = User.create(
   username: 'admin',
   email: 'admin@power.tn',
   password: '123456',
   password_confirmation: '123456',
   admin: true
 )
+file = open('https://res.cloudinary.com/ddx20vuxl/image/upload/v1586894678/user_utwpej.png')
+admin.avatar.attach(io: file, filename: 'avatar', content_type:'image')

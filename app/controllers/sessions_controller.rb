@@ -6,7 +6,8 @@ class SessionsController < ApplicationController
       login!
       render json: {
         logged_in: true,
-        user: @user
+        user: @user,
+        link: url_for(@user.avatar)
       }
     else
       render json: {
@@ -20,12 +21,14 @@ class SessionsController < ApplicationController
     if logged_in? && current_user
       render json: {
         logged_in: true,
-        user: current_user
+        user: current_user,
+        link: url_for(current_user.avatar)
       }
     else
       render json: {
         logged_in: false,
-        message: 'no such user'
+        message: 'no such user',
+        status: :internal_server_error
       }
     end
   end
