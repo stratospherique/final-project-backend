@@ -32,14 +32,18 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
+    if (user_params[:avatar].present?)
+      @user = User.new(user_params)
+    else
+      @user = User.new(user_faceless_params)
+    end
     if @user.save
-      begin
-        @user.avatar.attach(avatar_params)
-      rescue => exception
+      # @user.avatar.attach(params.require(:photo).permit(:avatar))
+      if !@user.avatar.attached?
         file = open('https://res.cloudinary.com/ddx20vuxl/image/upload/v1586894678/user_utwpej.png')
         @user.avatar.attach(io: file, filename: 'user.png', content_type: 'image')
       end
+
       login!
       render json: {
         status: :created,
@@ -99,11 +103,17 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:username, :email, :password, :password_confirmation)
+    params.permit(:username, :email, :password, :password_confirmation, :avatar)
   end
 
-  def avatar_params
-    params.require(:img).permit(:avatar)
+  def user_faceless_params
+    {
+      username: user_params[:username],
+      email: user_params[:email],
+      password: user_params[:password],
+      password_confirmation: user_params[:password_confirmation],
+    }
   end
+
   
 end
