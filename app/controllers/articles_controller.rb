@@ -11,8 +11,7 @@ class ArticlesController < ApplicationController
     else
       render json: {
         message: ['No data found'],
-        status: :internal_server_error
-      }
+      }, status: :internal_server_error
     end
   end
 
@@ -25,9 +24,8 @@ class ArticlesController < ApplicationController
       }
     else
       render json: {
-        message: ['No Trending Found'],
-        status: :internal_server_error
-      }
+        message: ['No Trending Found']
+      }, status: :internal_server_error
     end
   end
 
@@ -40,8 +38,7 @@ class ArticlesController < ApplicationController
     else
       render json: {
         message: @article.errors.full_messages,
-        status: :internal_server_error
-      }
+      }, status: :internal_server_error
     end
   end
 
@@ -55,8 +52,7 @@ class ArticlesController < ApplicationController
     rescue => exception
       render json: {
         message: ["Internal Server Error"],
-        status: :internal_server_error
-      }
+      }, status: :internal_server_error
     end
   end
 

@@ -11,9 +11,8 @@ class UsersController < ApplicationController
       }
     else
       render json: {
-        status: 500,
         errors: ['no users found']
-      }
+      }, status: 500
     end
   end
 
@@ -25,9 +24,8 @@ class UsersController < ApplicationController
       }
     else
       render json: {
-        status: 500,
         errors: ['user not registered']
-      }
+      }, status: 500
     end
   end
 
@@ -39,10 +37,11 @@ class UsersController < ApplicationController
     end
     if @user.save
       # @user.avatar.attach(params.require(:photo).permit(:avatar))
-      if !@user.avatar.attached?
+=begin if !@user.avatar.attached?
         file = open('https://res.cloudinary.com/ddx20vuxl/image/upload/v1586894678/user_utwpej.png')
         @user.avatar.attach(io: file, filename: 'user.png', content_type: 'image')
-      end
+      end 
+=end
 
       login!
       render json: {
@@ -52,9 +51,8 @@ class UsersController < ApplicationController
       }
     else 
       render json: {
-        status: :internal_server_error,
         errors: @user.errors.full_messages
-      }
+      }, status: :internal_server_error
     end
   end
 
@@ -65,15 +63,13 @@ class UsersController < ApplicationController
         render json: @user.articles.ids
       else
         render json: {
-        status: :internal_server_error,
         error: 'Unauthorized action'
-      } 
+      }, status: :internal_server_error
       end
     else
       render json: {
-        status: :internal_server_error,
         error: 'Unregistered User'
-      }
+      }, status: :internal_server_error
     end
   end
 
@@ -84,15 +80,13 @@ class UsersController < ApplicationController
         render json: @user.articles
       else
         render json: {
-        status: :internal_server_error,
         error: 'Unauthorized action'
-      } 
+      },status: :internal_server_error
       end
     else
       render json: {
-        status: :internal_server_error,
         error: 'Unregistered User'
-      }
+      }, status: :internal_server_error
     end
   end
 
