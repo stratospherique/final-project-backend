@@ -36,13 +36,6 @@ class UsersController < ApplicationController
       @user = User.new(user_faceless_params)
     end
     if @user.save
-      # @user.avatar.attach(params.require(:photo).permit(:avatar))
-=begin if !@user.avatar.attached?
-        file = open('https://res.cloudinary.com/ddx20vuxl/image/upload/v1586894678/user_utwpej.png')
-        @user.avatar.attach(io: file, filename: 'user.png', content_type: 'image')
-      end 
-=end
-
       login!
       render json: {
         status: :created,
@@ -81,7 +74,7 @@ class UsersController < ApplicationController
       else
         render json: {
         error: 'Unauthorized action'
-      },status: :internal_server_error
+      }, status: :internal_server_error
       end
     else
       render json: {

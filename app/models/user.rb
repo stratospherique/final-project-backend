@@ -6,7 +6,7 @@ class User < ApplicationRecord
   # for user avatar
   has_one_attached :avatar
 
-  has_many :favorites
+  has_many :favorites, dependent: :destroy
   has_many :articles, :through => :favorites
 
 

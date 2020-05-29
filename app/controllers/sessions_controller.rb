@@ -11,9 +11,8 @@ class SessionsController < ApplicationController
       }
     else
       render json: {
-        status: 500,
         errors: ['no such user','Please verify your credentials']
-      }
+      }, status: 500
     end
   end
 
@@ -27,9 +26,8 @@ class SessionsController < ApplicationController
     else
       render json: {
         logged_in: false,
-        message: 'no such user',
-        status: :internal_server_error
-      }
+        message: 'no such user'
+      }, status: :internal_server_error
     end
   end
 
