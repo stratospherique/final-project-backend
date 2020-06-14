@@ -1,6 +1,7 @@
 class ArticlesController < ApplicationController
   
   before_action :find_article, only: [:destroy, :show]
+  before_action :is_authenticated?, only: [:create, :destroy]
 
   def index
     @articles = Article.all
@@ -60,6 +61,14 @@ class ArticlesController < ApplicationController
 
   def find_article
     @article = Article.find(params[:id])
+  end
+
+  def is_authenticated?
+    if authorized_user?
+      render json: {
+        message: ["not authorized action"]
+        }, status: 404
+    end
   end
 
   def article_params

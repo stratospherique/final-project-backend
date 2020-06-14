@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe ArticlesController, type: :controller do
+
+  let(:user) {create :valid_user}
+
   describe 'GET #index' do
     it 'returns empty list of articles if no articles were created' do
       get :index
@@ -32,13 +35,17 @@ RSpec.describe ArticlesController, type: :controller do
         rating: nil}}
         json = JSON.parse(response.body)
         expect(response).to have_http_status(500)
-        expect(json['message']).to include("Description can't be blank")
-        expect(json['message']).to include("Price is not a number")
-        expect(json['message']).to include("Buildingtype can't be blank")
-        expect(json['message']).to include("Propertytype can't be blank")
-        expect(json['message']).to include("City is too short (minimum is 4 characters)")
-        expect(json['message']).to include("Footage is not a number")
-        expect(json['message']).to include("Rating is not included in the list")
+        expect(json['message']).to include("Description can't be blank",
+                                           "Price is not a number",
+                                           "Buildingtype can't be blank",
+                                           "Propertytype can't be blank",
+                                           "City is too short (minimum is 4 characters)",
+                                           "Footage is not a number",
+                                           "Rating is not included in the list")
+    end
+
+    it 'fails to create an article if used not signed in' do
+      
     end
 
     it 'creates an article' do
