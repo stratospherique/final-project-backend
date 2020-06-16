@@ -7,7 +7,8 @@ class User < ApplicationRecord
   has_one_attached :avatar
 
   has_many :favorites, dependent: :destroy
-  has_many :articles, :through => :favorites
+  has_many :liked_articles, :through => :favorites, class_name: 'Article'
+  has_many :articles, dependent: :destroy
 
 
   validates :username, presence: true
