@@ -53,7 +53,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user
       if @user = current_user
-        render json: @user.articles.ids
+        render json: @user.liked_articles.ids
       else
         render json: {
         error: 'Unauthorized action'
@@ -70,7 +70,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user
       if @user = current_user
-        render json: @user.articles
+        render json: @user.liked_articles
       else
         render json: {
         error: 'Unauthorized action'

@@ -63,13 +63,6 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
   end
 
-  def is_authenticated?
-    if authorized_user?
-      render json: {
-        message: ["not authorized action"]
-        }, status: 404
-    end
-  end
 
   def article_params
     params.require(:article).permit(:description, :price, :buildingType, :propertyType, :city, :footage, :rating, :preview => [])

@@ -4,7 +4,8 @@ require 'faker'
 RSpec.describe Article, type: :model do
   context 'when adding and article' do
     let(:article) { Article.new }
-    let(:errors_count) { 9 }
+    let(:errors_count) { 10 }
+    let(:author) {create :author}
 
     it 'creates an invalid Real estate without attributes' do
       expect(article).to be_invalid
@@ -78,6 +79,15 @@ RSpec.describe Article, type: :model do
       expect(article.errors.full_messages).not_to include('Rating is not included in the list')
     end
 
+    it 'checks if an autohor is entered' do
+      expect(article).to be_invalid
+      expect(article.errors.full_messages).to include('Author must exist')
+      expect(article).to be_invalid
+      article.author = author
+      expect(article).to be_invalid
+      expect(article.errors.full_messages).not_to include('Author must exist')
+    end
+
     it 'create an valid Real estate with multiple attributes' do
       article.description = '2 bedrooms 1 bathroom'
       article.price = 544
@@ -87,6 +97,7 @@ RSpec.describe Article, type: :model do
       article.city = Faker::Address.city
       article.footage = Faker::Number.decimal(l_digits: 4, r_digits: 1)
       article.rating = Faker::Number.between(from: 0, to: 5)
+      article.author = author
       expect(article).to be_valid
       expect(article.errors.full_messages).to eq([])
     end
