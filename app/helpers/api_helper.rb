@@ -1,19 +1,33 @@
 module ApiHelper
-    def login!
-      session[:user_id] = @user.id
-    end
-    def logged_in?
-      !!session[:user_id]
-    end
-    def current_user
-      @current_user ||= User.find(session[:user_id]) if session[:user_id]
-    end
-    def authorized_user?
-       @user == current_user
-    end
+    
+  def logged_in?
+    !!session[:user_id]
+  end
+    
 
-    def logout!
-       session.clear
+  def logout!
+     session.clear
+     @current_user = nil
+  end
+
+  def current_user
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  end
+
+  def authorized_user?
+     @user == current_user
+  end
+
+  def login!
+    session[:user_id] = @user.id
+  end
+
+  def is_authenticated?
+    unless self.logged_in? #!!session[:user_id] && self.current_user
+      render json: {
+        message: ["not authorized action"]
+        }, status: 404
     end
+  end
 
 end

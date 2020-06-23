@@ -2,6 +2,7 @@ class ArticlesController < ApplicationController
   
   before_action :find_article, only: [:destroy, :show]
   before_action :is_authenticated?, only: [:create, :destroy]
+  
 
   def index
     @articles = Article.all
@@ -45,14 +46,16 @@ class ArticlesController < ApplicationController
 
   def destroy
     begin
+      raise 'Unauthorized Action' if (@article.user_id != current_user.id)
       @article.destroy
       render json: {
         status: 200,
         message: ["deleted successfully"]
       }
     rescue => exception
+      p exception
       render json: {
-        message: ["Internal Server Error"],
+        message: [exception],
       }, status: :internal_server_error
     end
   end
@@ -60,8 +63,16 @@ class ArticlesController < ApplicationController
   private
 
   def find_article
-    @article = Article.find(params[:id])
+    begin
+      @article = Article.find(params[:id])
+    rescue => exception
+      render json: {
+        message: [exception],
+      }, status: :internal_server_error    
+    end
+    
   end
+
 
 
   def article_params

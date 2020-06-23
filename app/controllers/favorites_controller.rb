@@ -17,4 +17,5 @@ class FavoritesController < ApplicationController
   def favor_params
     params.require(:favorite).permit(:user_id,:article_id)
   end
+
 end

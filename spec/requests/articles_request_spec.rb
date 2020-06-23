@@ -52,6 +52,10 @@ RSpec.describe "Articles", type: :request do
                   }
       end
 
+      after(:each) do
+        delete logout_path     
+      end
+
       it 'fails to create an article if params were empty' do
         post '/articles', params: {article: {
           description: nil,
@@ -119,49 +123,51 @@ RSpec.describe "Articles", type: :request do
     end
 
     describe 'Articles deletion' do
-      let(:article) { create :articles }
+      let(:article) { create :creation_article }
+      let(:random_article) { create :articles }
       context 'When user is logged in' do
         before(:each) do
           post login_path, params: {
                         user: {
-                            username: user.username,
+                            username: article.author.username,
                             password: 'ass2grass'
                         }
                     }
+          puts "logged_in"
+        end
+
+        after(:each) do
+          delete logout_path   
         end
 
         it 'deletes an article if a correct params were passed' do
           expect {
-            delete article_url, params: { 
-              id: article.id 
-            }
-          }.to change(user.articles, :count)
+            delete "/articles/#{article.id}"
+          }.to change(article.author.articles, :count)
+          expect(response).to have_http_status(200)
         end
 
         it 'fails to delete an article if a wrong params were passed' do
           expect {
-            delete article_url, params: {
-               id: article.id 
-            }
-          }.not_to change(user.articles, :count)
+            delete "/articles/#{777}"
+          }.not_to change(article.author.articles, :count)
+          expect(response).to have_http_status(500)
         end
 
         it 'fails to delete an articles if the user is not the author' do
           expect {
-            delete article_url, params: { 
-              id: article.id 
-            }
-          }.to change(user.articles, :count)
+            delete "/articles/#{random_article.id}"
+          }.not_to change(article.author.articles, :count)
+          expect(response).to have_http_status(500)
         end
       end
 
       context 'when user in not logged in' do
         it 'prevents an no logged user from deleting an article' do
           expect {
-            delete article_url, params: { 
-              id: article.id 
-            }
-          }.to change(user.articles, :count)
+            delete "/articles/#{article.id}"
+          }.not_to change(article.author.articles, :count)
+          expect(response).to have_http_status(404)
         end
       end
     end

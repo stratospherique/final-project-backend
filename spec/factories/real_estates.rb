@@ -22,6 +22,6 @@ FactoryBot.define do
     city {Faker::Address.city}
     footage {Faker::Number.decimal(l_digits: 4, r_digits: 1)}
     rating {Faker::Number.between(from: 0, to: 5)}
-    user_id { valid_user.id }
+    author factory: :agent
   end
 end
