@@ -46,14 +46,13 @@ class ArticlesController < ApplicationController
 
   def destroy
     begin
-      raise 'Unauthorized Action' if (@article.user_id != current_user.id)
+      raise 'Unauthorized Action' if (@article.user_id != current_user.id && !current_user.admin)
       @article.destroy
       render json: {
         status: 200,
         message: ["deleted successfully"]
       }
     rescue => exception
-      p exception
       render json: {
         message: [exception],
       }, status: :internal_server_error

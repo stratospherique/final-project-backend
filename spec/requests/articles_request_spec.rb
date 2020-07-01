@@ -125,7 +125,8 @@ RSpec.describe "Articles", type: :request do
     describe 'Articles deletion' do
       let(:article) { create :creation_article }
       let(:random_article) { create :articles }
-      context 'When user is logged in' do
+      let(:admin_user) { create :admin_user }
+      context 'When user is logged in (not admin)' do
         before(:each) do
           post login_path, params: {
                         user: {
@@ -133,7 +134,6 @@ RSpec.describe "Articles", type: :request do
                             password: 'ass2grass'
                         }
                     }
-          puts "logged_in"
         end
 
         after(:each) do
@@ -159,6 +159,43 @@ RSpec.describe "Articles", type: :request do
             delete "/articles/#{random_article.id}"
           }.not_to change(article.author.articles, :count)
           expect(response).to have_http_status(500)
+        end
+      end
+
+      context 'When user is logged in (admin)' do
+        before(:each) do
+          post login_path, params: {
+                        user: {
+                            username: admin_user.username,
+                            password: 'ass2grass'
+                        }
+                    }
+        end
+
+        after(:each) do
+          delete logout_path   
+        end
+
+        it 'deletes an article if a correct params were passed' do
+          the_art = article
+          expect {
+            delete "/articles/#{the_art.id}"
+          }.to change(Article, :count)
+          expect(response).to have_http_status(200)
+        end
+
+        it 'fails to delete an article if a wrong params were passed' do
+          expect {
+            delete "/articles/#{777}"
+          }.not_to change(Article, :count)
+          expect(response).to have_http_status(500)
+        end
+
+        it 'deletes an articles if the user is not the author but is admin' do
+          expect {
+            delete "/articles/#{random_article.id}"
+          }.not_to change(Article, :count)
+          expect(response).to have_http_status(200)
         end
       end
 
