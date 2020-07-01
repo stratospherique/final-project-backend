@@ -35,6 +35,3 @@ local:
 
 cloudinary:      
   service: Cloudinary
-  access_key_id: "182969462325444"
-  secret_access_key: "Bto-ODj7nUQJOnsltOq3SR8xvrw"
-  bucket: "ddx20vuxl"
