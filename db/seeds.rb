@@ -29,5 +29,3 @@ admin = User.create(
   password_confirmation: '123456',
   admin: true
 )
-file = open('https://res.cloudinary.com/ddx20vuxl/image/upload/v1586894678/user_utwpej.png')
-admin.avatar.attach(io: file, filename: 'avatar', content_type:'image')
