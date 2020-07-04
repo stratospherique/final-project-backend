@@ -30,4 +30,18 @@ module ApiHelper
     end
   end
 
+  def display_user(user)
+    if user.avatar.attached?
+      render json: {
+        user: user,
+        link: url_for(user.avatar)
+      }
+    else
+      render json: {
+        user: user,
+        link: 'http://res.cloudinary.com/ddx20vuxl/image/upload/v1586894678/user_utwpej.png'
+      }
+    end
+  end
+
 end

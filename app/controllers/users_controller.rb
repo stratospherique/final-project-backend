@@ -18,10 +18,7 @@ class UsersController < ApplicationController
 
   def show
     if @user
-      render json: {
-        user: @user,
-        link: url_for(@user.avatar)
-      }
+      display_user(@user)
     else
       render json: {
         errors: ['user not registered']
@@ -37,11 +34,7 @@ class UsersController < ApplicationController
     end
     if @user.save
       login!
-      render json: {
-        status: :created,
-        user: @user,
-        link: url_for(@user.avatar)
-      }
+      display_user(@user)
     else 
       render json: {
         errors: @user.errors.full_messages

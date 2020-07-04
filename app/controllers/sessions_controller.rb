@@ -4,11 +4,7 @@ class SessionsController < ApplicationController
     @user = User.find_by(username: session_params[:username])
     if @user && @user.authenticate(session_params[:password])
       login!
-      render json: {
-        logged_in: true,
-        user: @user,
-        link: url_for(@user.avatar)
-      }
+      display_user(@user)
     else
       render json: {
         errors: ['no such user','Please verify your credentials']

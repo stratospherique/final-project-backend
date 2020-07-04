@@ -42,7 +42,7 @@ RSpec.describe UsersController, type: :controller do
       post :create, params: {username: 'alex', email: 'alex@goosd.com', password: 'ab12cd34', password_confirmation: 'ab12cd34'}
       parsed_response = JSON.parse(response.body)
       expect(response).to have_http_status(200)
-      expect(User.last.avatar.attached?).to be(true)
+      expect(User.last.avatar.attached?).to be(false)
     end
   end
 
