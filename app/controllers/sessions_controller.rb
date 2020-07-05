@@ -4,15 +4,11 @@ class SessionsController < ApplicationController
     @user = User.find_by(username: session_params[:username])
     if @user && @user.authenticate(session_params[:password])
       login!
-      render json: {
-        logged_in: true,
-        user: @user
-      }
+      display_user(@user)
     else
       render json: {
-        status: 500,
         errors: ['no such user','Please verify your credentials']
-      }
+      }, status: 500
     end
   end
 
@@ -20,13 +16,14 @@ class SessionsController < ApplicationController
     if logged_in? && current_user
       render json: {
         logged_in: true,
-        user: current_user
+        user: current_user,
+        link: url_for(current_user.avatar)
       }
     else
       render json: {
         logged_in: false,
         message: 'no such user'
-      }
+      }, status: :internal_server_error
     end
   end
 

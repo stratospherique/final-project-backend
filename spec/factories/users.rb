@@ -29,5 +29,12 @@ FactoryBot.define do
         admin { true }
       end
     end
+
+    factory :agent, class: User, aliases: [:author] do
+      username {Faker::Name.unique.name}
+      email {Faker::Internet.unique.email}
+      password {'ass2grass'}
+      password_confirmation {'ass2grass'}
+    end
   end
 end

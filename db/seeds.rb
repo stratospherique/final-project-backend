@@ -6,6 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'faker'
+require 'open-uri'
 
 (1..20).each do |i|
   a = Article.new(
@@ -21,7 +22,7 @@ require 'faker'
   a.save
 end
 
-User.create(
+admin = User.create(
   username: 'admin',
   email: 'admin@power.tn',
   password: '123456',
